@@ -13,7 +13,7 @@ base_model = [
 ]
 
 phi_values = {
-    "b0": (0, 224, 0.2),  
+    "b0": (0, 224, 0.2),
     "b1": (0.5, 240, 0.2),
     "b2": (1, 260, 0.3),
     "b3": (2, 300, 0.3),
@@ -22,6 +22,7 @@ phi_values = {
     "b6": (5, 528, 0.5),
     "b7": (6, 600, 0.5),
 }
+
 
 class CNNBlock(nn.Module):
     def __init__(
@@ -38,10 +39,11 @@ class CNNBlock(nn.Module):
             bias=False,
         )
         self.bn = nn.BatchNorm2d(out_channels)
-        self.silu = nn.SiLU() 
+        self.silu = nn.SiLU()
 
     def forward(self, x):
         return self.silu(self.bn(self.cnn(x)))
+
 
 class SqueezeExcitation(nn.Module):
     def __init__(self, in_channels, reduced_dim):
@@ -57,6 +59,7 @@ class SqueezeExcitation(nn.Module):
     def forward(self, x):
         return x * self.se(x)
 
+
 class InvertedResidualBlock(nn.Module):
     def __init__(
             self,
@@ -66,8 +69,8 @@ class InvertedResidualBlock(nn.Module):
             stride,
             padding,
             expand_ratio,
-            reduction=4, 
-            survival_prob=0.8, 
+            reduction=4,
+            survival_prob=0.8,
     ):
         super(InvertedResidualBlock, self).__init__()
         self.survival_prob = 0.8
@@ -130,7 +133,7 @@ class EfficientNet(nn.Module):
         in_channels = channels
 
         for expand_ratio, channels, repeats, stride, kernel_size in base_model:
-            out_channels = 4*ceil(int(channels*width_factor) / 4)
+            out_channels = 4 * ceil(int(channels * width_factor) / 4)
             layers_repeats = ceil(repeats * depth_factor)
 
             for layer in range(layers_repeats):
@@ -139,9 +142,9 @@ class EfficientNet(nn.Module):
                         in_channels,
                         out_channels,
                         expand_ratio=expand_ratio,
-                        stride = stride if layer == 0 else 1,
+                        stride=stride if layer == 0 else 1,
                         kernel_size=kernel_size,
-                        padding=kernel_size//2, 
+                        padding=kernel_size // 2,
                     )
                 )
                 in_channels = out_channels
@@ -170,10 +173,3 @@ def test():
 
 
 test()
-
-
-
-
-
-
-

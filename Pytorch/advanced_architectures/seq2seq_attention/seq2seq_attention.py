@@ -49,7 +49,6 @@ class Encoder(nn.Module):
         self.dropout = nn.Dropout(p)
 
     def forward(self, x):
-
         embedding = self.dropout(self.embedding(x))
         # embedding shape: (seq_length, N, embedding_size)
 
@@ -64,7 +63,7 @@ class Encoder(nn.Module):
 
 class Decoder(nn.Module):
     def __init__(
-        self, input_size, embedding_size, hidden_size, output_size, num_layers, p
+            self, input_size, embedding_size, hidden_size, output_size, num_layers, p
     ):
         super(Decoder, self).__init__()
         self.hidden_size = hidden_size

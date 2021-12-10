@@ -6,7 +6,6 @@ with slight modification with added BatchNorm.
 import torch
 import torch.nn as nn
 
-
 architecture_config = [
     (7, 64, 2, 3),
     "M",

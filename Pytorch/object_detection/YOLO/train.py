@@ -24,7 +24,7 @@ torch.manual_seed(seed)
 # Hyperparameters etc. 
 LEARNING_RATE = 2e-5
 DEVICE = "cuda" if torch.cuda.is_available else "cpu"
-BATCH_SIZE = 16 # 64 in original paper but I don't have that much vram, grad accum?
+BATCH_SIZE = 16  # 64 in original paper but I don't have that much vram, grad accum?
 WEIGHT_DECAY = 0
 EPOCHS = 1000
 NUM_WORKERS = 2
@@ -46,7 +46,7 @@ class Compose(object):
         return img, bboxes
 
 
-transform = Compose([transforms.Resize((448, 448)), transforms.ToTensor(),])
+transform = Compose([transforms.Resize((448, 448)), transforms.ToTensor(), ])
 
 
 def train_fn(train_loader, model, optimizer, loss_fn):
@@ -65,7 +65,7 @@ def train_fn(train_loader, model, optimizer, loss_fn):
         # update progress bar
         loop.set_postfix(loss=loss.item())
 
-    print(f"Mean loss was {sum(mean_loss)/len(mean_loss)}")
+    print(f"Mean loss was {sum(mean_loss) / len(mean_loss)}")
 
 
 def main():
@@ -108,7 +108,6 @@ def main():
     )
 
     for epoch in range(EPOCHS):
-
         pred_boxes, target_boxes = get_bboxes(
             train_loader, model, iou_threshold=0.5, threshold=0.4
         )
@@ -117,7 +116,6 @@ def main():
             pred_boxes, target_boxes, iou_threshold=0.5, box_format="midpoint"
         )
         print(f"Train mAP: {mean_avg_prec}")
-
 
         train_fn(train_loader, model, optimizer, loss_fn)
 

@@ -3,8 +3,9 @@ from collections import Counter
 
 from iou import intersection_over_union
 
+
 def mean_average_precision(
-    pred_boxes, true_boxes, iou_threshold=0.5, box_format="midpoint", num_classes=20
+        pred_boxes, true_boxes, iou_threshold=0.5, box_format="midpoint", num_classes=20
 ):
     """
     Calculates mean average precision 
@@ -46,7 +47,7 @@ def mean_average_precision(
         TP = torch.zeros((len(detections)))
         FP = torch.zeros((len(detections)))
         total_true_bboxes = len(ground_truths)
-        
+
         if total_true_bboxes == 0:
             continue
 
@@ -88,4 +89,3 @@ def mean_average_precision(
         average_precisions.append(torch.trapz(precisions, recalls))
 
     return sum(average_precisions) / len(average_precisions)
-

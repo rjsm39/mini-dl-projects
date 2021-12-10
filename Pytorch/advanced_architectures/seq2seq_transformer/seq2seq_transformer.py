@@ -1,4 +1,3 @@
-
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -36,18 +35,18 @@ english.build_vocab(train_data, max_size=10000, min_freq=2)
 
 class Transformer(nn.Module):
     def __init__(
-        self,
-        embedding_size,
-        src_vocab_size,
-        trg_vocab_size,
-        src_pad_idx,
-        num_heads,
-        num_encoder_layers,
-        num_decoder_layers,
-        forward_expansion,
-        dropout,
-        max_len,
-        device,
+            self,
+            embedding_size,
+            src_vocab_size,
+            trg_vocab_size,
+            src_pad_idx,
+            num_heads,
+            num_encoder_layers,
+            num_decoder_layers,
+            forward_expansion,
+            dropout,
+            max_len,
+            device,
     ):
         super(Transformer, self).__init__()
         self.src_word_embedding = nn.Embedding(src_vocab_size, embedding_size)
@@ -80,16 +79,16 @@ class Transformer(nn.Module):
 
         src_positions = (
             torch.arange(0, src_seq_length)
-            .unsqueeze(1)
-            .expand(src_seq_length, N)
-            .to(self.device)
+                .unsqueeze(1)
+                .expand(src_seq_length, N)
+                .to(self.device)
         )
 
         trg_positions = (
             torch.arange(0, trg_seq_length)
-            .unsqueeze(1)
-            .expand(trg_seq_length, N)
-            .to(self.device)
+                .unsqueeze(1)
+                .expand(trg_seq_length, N)
+                .to(self.device)
         )
 
         embed_src = self.dropout(

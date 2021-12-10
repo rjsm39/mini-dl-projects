@@ -5,7 +5,6 @@ import sys
 
 
 def translate_sentence(model, sentence, german, english, device, max_length=50):
-
     spacy_ger = spacy.load("de")
 
     # Create tokens using spacy and everything in lower case (which is what our vocab is)
@@ -57,7 +56,7 @@ def bleu(data, model, german, english, device):
         trg = vars(example)["trg"]
 
         prediction = translate_sentence(model, src, german, english, device)
-        prediction = prediction[:-1]  
+        prediction = prediction[:-1]
 
         targets.append([trg])
         outputs.append(prediction)

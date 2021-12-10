@@ -59,7 +59,7 @@ class Encoder(nn.Module):
 
 class Decoder(nn.Module):
     def __init__(
-        self, input_size, embedding_size, hidden_size, output_size, num_layers, p
+            self, input_size, embedding_size, hidden_size, output_size, num_layers, p
     ):
         super(Decoder, self).__init__()
         self.dropout = nn.Dropout(p)
@@ -124,7 +124,6 @@ class Seq2Seq(nn.Module):
         return outputs
 
 
-
 # Training hyperparameters
 num_epochs = 100
 learning_rate = 0.001
@@ -177,7 +176,6 @@ criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
 if load_model:
     load_checkpoint(torch.load("my_checkpoint.pth.tar"), model, optimizer)
 
-
 sentence = "ein boot mit mehreren männern darauf wird von einem großen pferdegespann ans ufer gezogen."
 
 for epoch in range(num_epochs):
@@ -222,6 +220,5 @@ for epoch in range(num_epochs):
         # Plot to tensorboard
         writer.add_scalar("Training loss", loss, global_step=step)
         step += 1
-
 
 score = bleu(test_data[1:100], model, german, english, device)

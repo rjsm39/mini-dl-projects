@@ -19,17 +19,18 @@ from utils import (
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
+
 class YOLODataset(Dataset):
     def __init__(
-        self,
-        csv_file,
-        img_dir,
-        label_dir,
-        anchors,
-        image_size=416,
-        S=[13, 26, 52],
-        C=20,
-        transform=None,
+            self,
+            csv_file,
+            img_dir,
+            label_dir,
+            anchors,
+            image_size=416,
+            S=[13, 26, 52],
+            C=20,
+            transform=None,
     ):
         self.annotations = pd.read_csv(csv_file)
         self.img_dir = img_dir
@@ -105,7 +106,7 @@ def test():
     )
     S = [13, 26, 52]
     scaled_anchors = torch.tensor(anchors) / (
-        1 / torch.tensor(S).unsqueeze(1).unsqueeze(1).repeat(1, 3, 2)
+            1 / torch.tensor(S).unsqueeze(1).unsqueeze(1).repeat(1, 3, 2)
     )
     loader = DataLoader(dataset=dataset, batch_size=1, shuffle=True)
     for x, y in loader:

@@ -80,14 +80,14 @@ class GoogLeNet(nn.Module):
         x = self.fc1(x)
 
         if self.aux_logits and self.training:
-            return aux1, aux2, x
+            return self.aux1, self.aux2, x
         else:
             return x
 
 
 class Inception_block(nn.Module):
     def __init__(
-        self, in_channels, out_1x1, red_3x3, out_3x3, red_5x5, out_5x5, out_1x1pool
+            self, in_channels, out_1x1, red_3x3, out_3x3, red_5x5, out_5x5, out_1x1pool
     ):
         super(Inception_block, self).__init__()
         self.branch1 = conv_block(in_channels, out_1x1, kernel_size=(1, 1))

@@ -53,8 +53,8 @@ class YoloLoss(nn.Module):
         # predictions, which is the one with highest Iou calculated previously.
         box_predictions = exists_box * (
             (
-                bestbox * predictions[..., 26:30]
-                + (1 - bestbox) * predictions[..., 21:25]
+                    bestbox * predictions[..., 26:30]
+                    + (1 - bestbox) * predictions[..., 21:25]
             )
         )
 
@@ -77,7 +77,7 @@ class YoloLoss(nn.Module):
 
         # pred_box is the confidence score for the bbox with highest IoU
         pred_box = (
-            bestbox * predictions[..., 25:26] + (1 - bestbox) * predictions[..., 20:21]
+                bestbox * predictions[..., 25:26] + (1 - bestbox) * predictions[..., 20:21]
         )
 
         object_loss = self.mse(
@@ -89,11 +89,11 @@ class YoloLoss(nn.Module):
         #   FOR NO OBJECT LOSS    #
         # ======================= #
 
-        #max_no_obj = torch.max(predictions[..., 20:21], predictions[..., 25:26])
-        #no_object_loss = self.mse(
+        # max_no_obj = torch.max(predictions[..., 20:21], predictions[..., 25:26])
+        # no_object_loss = self.mse(
         #    torch.flatten((1 - exists_box) * max_no_obj, start_dim=1),
         #    torch.flatten((1 - exists_box) * target[..., 20:21], start_dim=1),
-        #)
+        # )
 
         no_object_loss = self.mse(
             torch.flatten((1 - exists_box) * predictions[..., 20:21], start_dim=1),
@@ -110,15 +110,15 @@ class YoloLoss(nn.Module):
         # ================== #
 
         class_loss = self.mse(
-            torch.flatten(exists_box * predictions[..., :20], end_dim=-2,),
-            torch.flatten(exists_box * target[..., :20], end_dim=-2,),
+            torch.flatten(exists_box * predictions[..., :20], end_dim=-2, ),
+            torch.flatten(exists_box * target[..., :20], end_dim=-2, ),
         )
 
         loss = (
-            self.lambda_coord * box_loss  # first two rows in paper
-            + object_loss  # third row in paper
-            + self.lambda_noobj * no_object_loss  # forth row
-            + class_loss  # fifth row
+                self.lambda_coord * box_loss  # first two rows in paper
+                + object_loss  # third row in paper
+                + self.lambda_noobj * no_object_loss  # forth row
+                + class_loss  # fifth row
         )
 
         return loss

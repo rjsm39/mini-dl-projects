@@ -1,4 +1,3 @@
-
 import torch
 import torch.nn as nn
 
@@ -11,8 +10,8 @@ class SelfAttention(nn.Module):
         self.head_dim = embed_size // heads
 
         assert (
-            self.head_dim * heads == embed_size
-        ), 
+                self.head_dim * heads == embed_size
+        )
 
         self.values = nn.Linear(self.head_dim, self.head_dim, bias=False)
         self.keys = nn.Linear(self.head_dim, self.head_dim, bias=False)
@@ -33,7 +32,6 @@ class SelfAttention(nn.Module):
         values = self.values(values)  # (N, value_len, heads, head_dim)
         keys = self.keys(keys)  # (N, key_len, heads, head_dim)
         queries = self.queries(query)  # (N, query_len, heads, heads_dim)
-
 
         energy = torch.einsum("nqhd,nkhd->nhqk", [queries, keys])
         if mask is not None:
@@ -77,17 +75,16 @@ class TransformerBlock(nn.Module):
 
 class Encoder(nn.Module):
     def __init__(
-        self,
-        src_vocab_size,
-        embed_size,
-        num_layers,
-        heads,
-        device,
-        forward_expansion,
-        dropout,
-        max_length,
+            self,
+            src_vocab_size,
+            embed_size,
+            num_layers,
+            heads,
+            device,
+            forward_expansion,
+            dropout,
+            max_length,
     ):
-
         super(Encoder, self).__init__()
         self.embed_size = embed_size
         self.device = device
@@ -140,15 +137,15 @@ class DecoderBlock(nn.Module):
 
 class Decoder(nn.Module):
     def __init__(
-        self,
-        trg_vocab_size,
-        embed_size,
-        num_layers,
-        heads,
-        forward_expansion,
-        dropout,
-        device,
-        max_length,
+            self,
+            trg_vocab_size,
+            embed_size,
+            num_layers,
+            heads,
+            forward_expansion,
+            dropout,
+            device,
+            max_length,
     ):
         super(Decoder, self).__init__()
         self.device = device
@@ -179,20 +176,19 @@ class Decoder(nn.Module):
 
 class Transformer(nn.Module):
     def __init__(
-        self,
-        src_vocab_size,
-        trg_vocab_size,
-        src_pad_idx,
-        trg_pad_idx,
-        embed_size=512,
-        num_layers=6,
-        forward_expansion=4,
-        heads=8,
-        dropout=0,
-        device="cpu",
-        max_length=100,
+            self,
+            src_vocab_size,
+            trg_vocab_size,
+            src_pad_idx,
+            trg_pad_idx,
+            embed_size=512,
+            num_layers=6,
+            forward_expansion=4,
+            heads=8,
+            dropout=0,
+            device="cpu",
+            max_length=100,
     ):
-
         super(Transformer, self).__init__()
 
         self.encoder = Encoder(
